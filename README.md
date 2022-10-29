@@ -10,19 +10,37 @@ sbt Docker/publishLocal
 
 - run a container
 ```bash
-# docker run --detach --name node1 pbft1:0.1.0-SNAPSHOT
-# docker container prune
-export IS_LEADER_NODE=true; docker run -p 9000:9000 --detach --name node1 pbft1:0.1.0-SNAPSHOT
+export IS_LEADER_NODE=true; docker run -p 9000:9000 --detach --name leader pbft1:0.1.0-SNAPSHOT
+```
+
+- run cluster
+```bash
+cd ./docker
+docker-compose up -d leader rep1 rep2 rep3
 ```
 
 - REST API
 ```bash
+curl -X POST http://localhost:9000/addPeer -d "akka.tcp://pbft-distributed-system@172.21.0.2:2552"
 curl -X POST http://localhost:9000/propose -d "aaaa"
 curl http://localhost:9000/result
+curl http://localhost:9000/info
 ```
 
+- when port is already in use on Windows
+```cmd
+netstat -ano | find ":9000"
+# tasklist /fi "PID eq 34752"
+taskkill /F /PID 34752
+```
 ### example
 
+
+
+add peer
+```bash
+curl -X POST http://localhost:9000/addPeer -d "akka.tcp://pbft-distributed-system@172.21.0.2:2552"
+```
 
 ### reference
 - https://github.com/NightWhistler/naivechain-scala
@@ -33,3 +51,4 @@ curl http://localhost:9000/result
 - https://pmg.csail.mit.edu/papers/osdi99.pdf
 - https://hazm.at/mox/distributed-system/algorithm/transaction/pbft/index.html
 - https://jp.coursera.org/lecture/scala2-akka-reactive/lecture-3-3-persistent-actor-state-pu6Dw
+- https://github.com/x3ro/scala-sbt-logback-example/blob/master/src/main/resources/logback.xml

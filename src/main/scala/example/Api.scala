@@ -7,7 +7,7 @@ import akka.http.scaladsl.unmarshalling.PredefinedFromEntityUnmarshallers
 import akka.pattern.ask
 import akka.util.Timeout
 import de.heikoseeberger.akkahttpjson4s.Json4sSupport
-import example.ApiProxy.{GetResult, Req}
+import example.ApiProxy._
 import example.P2P.AddPeer
 
 import scala.concurrent.ExecutionContext
@@ -28,7 +28,12 @@ trait Api extends Json4sSupport {
         complete(
           (proxyNodeActor ? GetResult).mapTo[String]
         )
-      }
+      } ~
+        path("info") {
+          complete(
+            (proxyNodeActor ? GetNodeInfo).mapTo[String]
+          )
+        }
     } ~
       post {
         path("propose") {

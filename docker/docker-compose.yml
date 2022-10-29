@@ -1,0 +1,50 @@
+version: '2'
+services:
+  leader:
+    image: pbft1:0.1.0-SNAPSHOT
+    environment:
+      IS_LEADER_NODE: "true"
+      NUM_NODE: 4
+      BIND_PORT: 9000
+    ports:
+      - "9000:9000"
+    volumes:
+      - type: bind
+        source: ./logs/n0.log
+        target: /tmp
+
+  rep1:
+    image: pbft1:0.1.0-SNAPSHOT
+    environment:
+      NUM_NODE: 4
+      BIND_PORT: 9001
+    ports:
+      - "9001:9001"
+    volumes:
+      - type: bind
+        source: ./logs/n1.log
+        target: /tmp
+
+  rep2:
+    image: pbft1:0.1.0-SNAPSHOT
+    environment:
+      NUM_NODE: 4
+      BIND_PORT: 9002
+    ports:
+      - "9002:9002"
+    volumes:
+      - type: bind
+        source: ./logs/n2.log
+        target: /tmp
+
+  rep3:
+    image: pbft1:0.1.0-SNAPSHOT
+    environment:
+      NUM_NODE: 4
+      BIND_PORT: 9003
+    ports:
+      - "9003:9003"
+    volumes:
+      - type: bind
+        source: ./logs/n3.log
+        target: /tmp

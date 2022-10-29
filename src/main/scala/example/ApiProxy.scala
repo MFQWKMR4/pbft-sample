@@ -12,6 +12,8 @@ object ApiProxy {
 
   case object GetResult extends ApiMsg
 
+  case object GetNodeInfo extends ApiMsg
+
 }
 
 trait ApiProxy {
@@ -23,15 +25,17 @@ trait ApiProxy {
   var result = "not yet"
 
   receiver {
-    // leaderにおくる
+    // to PBFT algorithm
     case Req(tx) =>
       broadcast(ToLeader(self, tx))
-      sender() ! "OK"
+      sender() ! "proposed"
 
-    // PBFTからResponseがとどく
+    // from PBFT algorithm
     case Res(tx) => result = tx
 
     case GetResult => sender() ! result
+
+    case GetNodeInfo => sender() ! self.toString()
   }
 }
 

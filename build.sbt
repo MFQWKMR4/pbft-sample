@@ -15,7 +15,9 @@ lazy val root = (project in file("."))
         "com.typesafe.akka" %% "akka-http" % versions.akkaHttp,
         "com.typesafe.akka" %% "akka-remote" % versions.akka,
         "com.typesafe.akka" %% "akka-slf4j" % versions.akka,
-        "de.heikoseeberger" %% "akka-http-json4s" % "1.16.1"
+        "de.heikoseeberger" %% "akka-http-json4s" % "1.16.1",
+        "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0",
+        "ch.qos.logback" % "logback-classic" % "1.1.3"
       )
 
       val testDeps = Seq(
