@@ -1,5 +1,5 @@
 # PBFT(Practical Byzantine Fault Tolerance)
-- a pbft simulation
+a pbft simulation
 
 ### overview
 - src
@@ -13,21 +13,23 @@
 
 ### usage
 
-- build image
+build image
 ```bash
 sbt Docker/publishLocal
 ```
 
-- run a container
+run a container
 ```bash
 export IS_LEADER_NODE=true; docker run -p 9000:9000 --detach --name leader pbft1:0.1.0-SNAPSHOT
 ```
 
-- run cluster
+run cluster
 ```bash
 cd ./docker
 docker-compose up -d leader rep1 rep2 rep3
 ```
+
+troubleshooting
 
 - when port is already in use on Windows
 ```cmd
@@ -35,6 +37,7 @@ netstat -ano | find ":9000"
 # tasklist /fi "PID eq 34752"
 taskkill /F /PID 34752
 ```
+
 ### example
 
 add peer
