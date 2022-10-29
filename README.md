@@ -1,5 +1,15 @@
-# PBFT
-- a sample implementation for simulation
+# PBFT(Practical Byzantine Fault Tolerance)
+- a pbft simulation
+
+### overview
+- src
+  - pbft node implementation
+- docker
+  - to run nodes in same network
+- extractor
+  - extracting logs and converting it for the viewer
+- viewer
+  - making pbft simulation visual on browser
 
 ### usage
 
@@ -19,14 +29,6 @@ cd ./docker
 docker-compose up -d leader rep1 rep2 rep3
 ```
 
-- REST API
-```bash
-curl -X POST http://localhost:9000/addPeer -d "akka.tcp://pbft-distributed-system@172.21.0.2:2552"
-curl -X POST http://localhost:9000/propose -d "aaaa"
-curl http://localhost:9000/result
-curl http://localhost:9000/info
-```
-
 - when port is already in use on Windows
 ```cmd
 netstat -ano | find ":9000"
@@ -35,12 +37,12 @@ taskkill /F /PID 34752
 ```
 ### example
 
-
-
 add peer
 ```bash
 curl -X POST http://localhost:9000/addPeer -d "akka.tcp://pbft-distributed-system@172.21.0.2:2552"
 ```
+
+see: setup.bash
 
 ### reference
 - https://github.com/NightWhistler/naivechain-scala
