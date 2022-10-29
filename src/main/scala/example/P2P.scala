@@ -1,41 +1,33 @@
 package example
 
 import akka.actor.{ActorRef, Terminated}
-import akka.util.Timeout
 import akka.pattern.pipe
-import example.P2P.Msg
-
-import java.util.concurrent.TimeUnit
-import scala.concurrent.duration.Duration
 
 object P2P {
 
-  sealed abstract class Msg
+  sealed abstract class P2PMsg extends BaseMsg
 
-  case class AddPeer(address: String) extends Msg
+  case class AddPeer(address: String) extends P2PMsg
 
-  case class ResolvePeer(actorRef: ActorRef) extends Msg
+  case class ResolvePeer(actorRef: ActorRef) extends P2PMsg
 
-  case class Peers(peers: Seq[String]) extends Msg
+  case class Peers(peers: Seq[String]) extends P2PMsg
 
-  case object GetPeers extends Msg
+  case object GetPeers extends P2PMsg
 
-  case object HandShake extends Msg
+  case object HandShake extends P2PMsg
 
 }
 
 trait P2P {
   this: BaseActor =>
+  import example.P2P._
 
-  var peers: Set[ActorRef] = Set.empty
+  var peers: Set[ActorRef] = Set(self)
 
-  def broadcast(msg: Msg): Unit = {
+  def broadcast(msg: BaseMsg): Unit = {
     peers.foreach(_ ! msg)
   }
-
-  import example.P2P._
-//  implicit val timeout = Timeout(Duration(5, TimeUnit.SECONDS))
-//  implicit val executionContext = context.system.dispatcher
 
   receiver {
     case AddPeer(peerAddress) =>

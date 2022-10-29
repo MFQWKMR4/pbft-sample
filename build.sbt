@@ -1,6 +1,7 @@
 scalaVersion := "2.12.8"
 
 lazy val root = (project in file("."))
+  .enablePlugins(JavaAppPackaging)
   .settings(
     name := "pbft1",
     libraryDependencies ++= {

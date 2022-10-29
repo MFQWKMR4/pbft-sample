@@ -1,11 +1,13 @@
 package example
 
 import akka.actor.AbstractActor.emptyBehavior
-import akka.actor.Actor
+import akka.actor.{Actor, ActorRef}
 import akka.util.Timeout
 
 import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
+
+abstract class BaseMsg
 
 class BaseActor extends Actor {
 
